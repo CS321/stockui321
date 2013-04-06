@@ -1,8 +1,0 @@
-Mar 20, 2013 1:48:50 PM Users.Accounts login
-INFO: testuser has logged in.
-Mar 20, 2013 1:48:55 PM Users.Accounts login
-INFO: trey has logged in.
-Mar 20, 2013 1:49:26 PM Stocks.TraderAccount buy
-INFO: Transaction SUCCESS: trey has bought 2 of AAPL for $452.32 per share.
-Mar 20, 2013 1:49:49 PM Stocks.TraderAccount sell
-INFO: Transaction SUCCESS: trey has sold 1 of AAPL for $452.20 per share.
