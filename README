@@ -1,0 +1,21 @@
+Trey Briggs (A25000839)
+CS321-1 Assignment 3
+UAH, Dr. Zhang
+
+This is a Netbeans project containing the required code for assignment 3.
+
+TO USE MY TEST USERS:
+I have made 3 users if you would like to see some data:
+user:trey pass:testing
+user:test pass:testing
+user:testuser pass:testing1
+
+Inside are the following Packages:
+
+Structure - Contains Table, StructuredTable, and supporting classes. This is the 2D table structure that is the basis for most of this program.
+Stocks - Contains TraderAccount, Market, and View Strategies. This handles transactions and market quotes.
+Users - Contains Account class and password encryption stuff. This holds all of our TraderAccount instances and can be saved to a file.
+System - Contains Main, Database reading/writing (Serialization), and Logging stuff.
+TextUI - Contains StockUI, Prompt, and Input Validator Strategies, this is where everything comes together.
+
+I have tested this on NetBeans IDE 7.2.1, OSX 10.8.2, and Java 1.6.0_37 64-bit.

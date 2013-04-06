@@ -1,0 +1,364 @@
+Trey Briggs (A25000839)
+CS321-1 Assignment 3
+UAH, Dr. Zhang
+
+Assignment brief:
+ Implement basic stock trading TUI using previous assignment work.
+
+Task1: Extended Table to StructuredTable which enforces same Types per column, this is generic enough to be used for other things. I then created a TraderAccount which contains a StructuredTable as its member (along with other user information).
+Task2: The TextUI Package contains the StockUI class, a Prompt class, and a set of (Strategy Design Pattern) input validation classes.
+Task3: I used the Strategy Design Pattern to present the UI with a different views of the data (Portfolio, Lots, etc), a new StructuredTable snapshot is sent as requested and the UI handles sorting the columns as needed. The Market page allows for real-time quotes and buy/sell.
+Task4: All abstraction layers are separated into their own package, representations are not exposed between the layers.
+Task5: A log file is kept (stocks.log) of all transactions. the Accounts table is also saved/retrieved on exit/startup.
+Task6: I used Strategy Design Pattern to present each view of an account's data (Portfolio, Lot, Closed Position, Transactions), it's not very efficient but it hides the complexity and was a good learning experience. I also used SDP to implement input validation in the Prompt class. The Market class is a Singleton because there should be only one.
+
+SAMPLE OUTPUT:
+
+1) Login
+2) Create a User
+e) exit
+> 2
+
+
+Please choose a Username:
+> testuser
+Please choose a Password
+> testing1
+
+
+User creation successful.
+
+1) Login
+2) Create a User
+e) exit
+> 1
+
+
+What is your Username?
+> testuser
+What is your Password?
+> testing1
+
+
+Welcome testuser
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> e
+1) Login
+2) Create a User
+e) exit
+> 1
+
+
+What is your Username?
+> trey
+What is your Password?
+> testing
+
+
+Welcome trey
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> 1
+
+
+Welcome trey
+
+1) Look up Stock
+2) Buy a Stock
+3) Sell a Stock
+e) Return to Main Menu
+> 1
+
+
+Ticker Symbol:
+> AAPL
+
+TICKER: AAPL
+LAST SELL: 452.13
+ASKING:452.26
+BIDDING: 452.12
+c) Continue
+> c
+
+
+Welcome trey
+
+1) Look up Stock
+2) Buy a Stock
+3) Sell a Stock
+e) Return to Main Menu
+> 2
+
+
+Ticker Symbol:
+> AAPL
+
+TICKER: AAPL
+LAST SELL: 452.23
+ASKING:452.32
+BIDDING: 452.16
+How many shares would you like?
+> 2
+What's your bid?
+> 452.32
+c) Continue
+> c
+
+
+Welcome trey
+
+1) Look up Stock
+2) Buy a Stock
+3) Sell a Stock
+e) Return to Main Menu
+> 3
+
+
+Ticker Symbol:
+> AAPL
+
+TICKER: AAPL
+LAST SELL: 452.2
+ASKING:452.29
+BIDDING: 452.2
+How many shares would you like to sell?
+> 1
+How much would you like to sell each share for?
+> 452.20
+c) Continue
+> c
+
+
+Welcome trey
+
+1) Look up Stock
+2) Buy a Stock
+3) Sell a Stock
+e) Return to Main Menu
+> e
+
+
+Welcome trey
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> 2
+
+
+trey
+Cash Balance: 8922.56
+Market Balance: 91756.18
+
+
+Select an option below to view your portfolio:
+1) Sort by Ticker Name
+2) Sort by Number Owned
+3) Sort by Price Paid
+4) Sort by Date
+5) Sort by Dollars Gained
+6) Sort by Percentage Gained
+e) Return to Main Menu
+> 6
+a) Ascending
+d) Descending
+> d
+ TICKER                          DATE  SHARES OWNED  COST BASIS    UNREALIZED GAINS        REALIZED GAINS          PERCENT GAINS 
+    BAC  Wed Mar 20 00:05:10 CDT 2013          1050       12.66              210.00                  0.00                   1.58
+      F  Wed Mar 20 00:05:34 CDT 2013          1000       13.17              195.00                  0.00                   1.48
+    VOO  Wed Mar 20 00:00:19 CDT 2013           550       70.96              389.62                -15.00                   1.00
+   AAPL  Wed Mar 20 13:49:26 CDT 2013             1      452.32               -0.26                 -0.12                  -0.06
+    BND  Wed Mar 20 00:00:29 CDT 2013           300       83.73             -100.50                  0.00                  -0.40
+c) Continue
+> c
+
+
+trey
+Cash Balance: 8922.56
+Market Balance: 91725.66
+
+
+Select an option below to view your portfolio:
+1) Sort by Ticker Name
+2) Sort by Number Owned
+3) Sort by Price Paid
+4) Sort by Date
+5) Sort by Dollars Gained
+6) Sort by Percentage Gained
+e) Return to Main Menu
+> e
+
+
+Welcome trey
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> 3
+
+
+trey
+Cash Balance: 8922.56
+Market Balance: 91741.12
+
+
+Select an option below to view your lots:
+1) Sort by Date
+2) Sort by Ticker Name
+3) Sort by Number Owned
+4) Sort by Price Paid
+5) Sort by Dollars Gained
+6) Sort by Percentage Gained
+e) Return to Main Menu
+> 1
+a) Ascending
+d) Descending
+> a
+ TICKER                          DATE  SHARES OWNED  COST BASIS      UNREALIZED GAINS        REALIZED GAINS         PERCENT GAINS 
+    VOO  Wed Mar 20 00:00:19 CDT 2013           500       70.96                340.00                -15.00                  0.96
+    BND  Wed Mar 20 00:00:29 CDT 2013           300       83.73                -99.90                  0.00                 -0.40
+    BAC  Wed Mar 20 00:05:10 CDT 2013          1000       12.66                200.00                  0.00                  1.58
+      F  Wed Mar 20 00:05:34 CDT 2013          1000       13.17                195.00                  0.00                  1.48
+    BAC  Wed Mar 20 00:50:42 CDT 2013            50       12.66                 10.00                  0.00                  1.58
+    VOO  Wed Mar 20 00:50:53 CDT 2013            50       70.96                 34.00                  0.00                  0.96
+   AAPL  Wed Mar 20 13:49:26 CDT 2013             1      452.32                 -0.30                 -0.12                 -0.07
+c) Continue
+> c
+
+
+trey
+Cash Balance: 8922.56
+Market Balance: 91724.43
+
+
+Select an option below to view your lots:
+1) Sort by Date
+2) Sort by Ticker Name
+3) Sort by Number Owned
+4) Sort by Price Paid
+5) Sort by Dollars Gained
+6) Sort by Percentage Gained
+e) Return to Main Menu
+> e
+
+
+Welcome trey
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> 4
+
+
+trey
+Select an option below to view your closed positions:
+1) Sort by Buy Date
+2) Sort by Closed Date
+3) Sort by Ticker Name
+4) Sort by Number of Shares
+5) Sort by Price Paid
+6) Sort by Dollars Gained
+e) Return to Main Menu
+> 2
+a) Ascending
+d) Descending
+> a
+ TICKER                      BUY DATE                   CLOSED DATE  NUMBER OF SHARES  COST BASIS  GAINS
+   MSFT  Wed Mar 20 01:34:42 CDT 2013  Wed Mar 20 01:34:51 CDT 2013               100       28.00   0.00
+c) Continue
+> c
+
+
+trey
+Select an option below to view your closed positions:
+1) Sort by Buy Date
+2) Sort by Closed Date
+3) Sort by Ticker Name
+4) Sort by Number of Shares
+5) Sort by Price Paid
+6) Sort by Dollars Gained
+e) Return to Main Menu
+> e
+
+
+Welcome trey
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> 5
+
+
+trey
+Select an option below to view your transactions:
+1) Sort by Ticker Name
+2) Sort by Buy Date
+3) Sort by Number of Shares
+4) Sort by Price Paid
+e) Return to Main Menu
+> 2
+a) Ascending
+d) Descending
+> a
+ TYPE  TICKER                          DATE  NUMBER OF SHARES  COST BASIS
+  BUY     VOO  Wed Mar 20 00:00:19 CDT 2013              1000       70.96
+  BUY     BND  Wed Mar 20 00:00:29 CDT 2013               300       83.73
+ SELL     VOO  Wed Mar 20 00:04:53 CDT 2013               500       70.93
+  BUY     BAC  Wed Mar 20 00:05:10 CDT 2013              1000       12.66
+  BUY       F  Wed Mar 20 00:05:34 CDT 2013              1000       13.17
+  BUY     BAC  Wed Mar 20 00:50:42 CDT 2013                50       12.66
+  BUY     VOO  Wed Mar 20 00:50:53 CDT 2013                50       70.96
+  BUY    MSFT  Wed Mar 20 01:34:42 CDT 2013               100       28.00
+ SELL    MSFT  Wed Mar 20 01:34:51 CDT 2013               100       28.00
+  BUY    AAPL  Wed Mar 20 13:49:26 CDT 2013                 2      452.32
+ SELL    AAPL  Wed Mar 20 13:49:49 CDT 2013                 1      452.20
+c) Continue
+> c
+
+
+trey
+Select an option below to view your transactions:
+1) Sort by Ticker Name
+2) Sort by Buy Date
+3) Sort by Number of Shares
+4) Sort by Price Paid
+e) Return to Main Menu
+> e
+
+
+Welcome trey
+
+1) Go to the Market
+2) See my Portfolio
+3) See my Lot Information
+4) See my Closed Positions
+5) See my Transaction Log
+e) Logout
+> e
+1) Login
+2) Create a User
+e) exit
+> e
