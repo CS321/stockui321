@@ -15,8 +15,22 @@ public class Market {
 
     // singleton design pattern
     private static Market singleton = null;
+
+    /**
+     * @return the singleton
+     */
+    public static Market getSingleton() {
+        return singleton;
+    }
+
+    /**
+     * @param aSingleton the singleton to set
+     */
+    public static void setSingleton(Market aSingleton) {
+        singleton = aSingleton;
+    }
     // NYSE TICKERSYMBOL | LAST TRADE | BID | ASK
-    StructuredTable<?> market;
+    private StructuredTable<?> market;
 
     /**
      * Constructor.
@@ -31,10 +45,10 @@ public class Market {
      * @return Singleton Market
      */
     public static Market getInstance() {
-        if (singleton == null) {
-            singleton = new Market();
+        if (getSingleton() == null) {
+            setSingleton(new Market());
         }
-        return singleton;
+        return getSingleton();
     }
 
     /**
@@ -66,7 +80,7 @@ public class Market {
                 }
 
                 if (!market.isEmpty()) {
-                    int index = TableHelper.search(market, ticker, 0);
+                    int index = TableHelper.search(getMarket(), ticker, 0);
                     if (index != -1) {
                         updatePrice(ticker, last);
                         updateBid(ticker, bid);
@@ -102,13 +116,13 @@ public class Market {
      * @param askPrice
      */
     private void addTicker(String tickerSymbol, double price, double bidPrice, double askPrice) {
-        if (market.isEmpty() || TableHelper.search(market, tickerSymbol, 0) == -1) {
+        if (getMarket().isEmpty() || TableHelper.search(getMarket(), tickerSymbol, 0) == -1) {
             ArrayList row = new ArrayList();
             row.add(tickerSymbol);
             row.add(price);
             row.add(bidPrice);
             row.add(askPrice);
-            market.addRow(row);
+            getMarket().addRow(row);
         }
     }
 
@@ -118,9 +132,9 @@ public class Market {
      * @param tickerSymbol
      */
     public void deleteTicker(String tickerSymbol) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            market.deleteRow(index);
+            getMarket().deleteRow(index);
         }
     }
 
@@ -145,9 +159,9 @@ public class Market {
      * @param price
      */
     public void updatePrice(String tickerSymbol, Double price) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            market.setEntry(index, 1, price);
+            getMarket().setEntry(index, 1, price);
         }
     }
 
@@ -158,9 +172,9 @@ public class Market {
      * @param bidPrice
      */
     public void updateBid(String tickerSymbol, Double bidPrice) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            market.setEntry(index, 2, bidPrice);
+            getMarket().setEntry(index, 2, bidPrice);
         }
     }
 
@@ -171,9 +185,9 @@ public class Market {
      * @param askPrice
      */
     public void updateAsk(String tickerSymbol, Double askPrice) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            market.setEntry(index, 3, askPrice);
+            getMarket().setEntry(index, 3, askPrice);
         }
     }
 
@@ -184,17 +198,17 @@ public class Market {
      * @return Last trade price, or -1 if ticker does not exist.
      */
     public double getPrice(String tickerSymbol) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            return ((Double) market.getEntry(index, 1)).doubleValue();
+            return ((Double) getMarket().getEntry(index, 1)).doubleValue();
         }
         try {
             getRealTimeData(tickerSymbol);
         } catch (InvalidTickerException e) {
             return -1;
         }
-        index = TableHelper.search(market, tickerSymbol, 0);
-        return ((Double) market.getEntry(index, 1)).doubleValue();
+        index = TableHelper.search(getMarket(), tickerSymbol, 0);
+        return ((Double) getMarket().getEntry(index, 1)).doubleValue();
     }
 
     /**
@@ -204,17 +218,17 @@ public class Market {
      * @return Bid Price, or -1 if ticker does not exist.
      */
     public double getBid(String tickerSymbol) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            return ((Double) market.getEntry(index, 2)).doubleValue();
+            return ((Double) getMarket().getEntry(index, 2)).doubleValue();
         }
         try {
             getRealTimeData(tickerSymbol);
         } catch (InvalidTickerException e) {
             return -1;
         }
-        index = TableHelper.search(market, tickerSymbol, 0);
-        return ((Double) market.getEntry(index, 2)).doubleValue();
+        index = TableHelper.search(getMarket(), tickerSymbol, 0);
+        return ((Double) getMarket().getEntry(index, 2)).doubleValue();
     }
 
     /**
@@ -224,28 +238,28 @@ public class Market {
      * @return Asking Price, or -1 if ticker does not exist.
      */
     public double getAsk(String tickerSymbol) {
-        int index = TableHelper.search(market, tickerSymbol, 0);
+        int index = TableHelper.search(getMarket(), tickerSymbol, 0);
         if (index != -1) {
-            return ((Double) market.getEntry(index, 3)).doubleValue();
+            return ((Double) getMarket().getEntry(index, 3)).doubleValue();
         }
         try {
             getRealTimeData(tickerSymbol);
         } catch (InvalidTickerException e) {
             return -1;
         }
-        index = TableHelper.search(market, tickerSymbol, 0);
-        return ((Double) market.getEntry(index, 3)).doubleValue();
+        index = TableHelper.search(getMarket(), tickerSymbol, 0);
+        return ((Double) getMarket().getEntry(index, 3)).doubleValue();
     }
 
     /**
      * Update all ticker records.
      */
     public void updateMarket() {
-        if (market.isEmpty()) {
+        if (getMarket().isEmpty()) {
             return;
         }
         
-        Iterator m = market.IterateColumn(0);
+        Iterator m = getMarket().IterateColumn(0);
         while (m.hasNext()) {
             try {
                 getRealTimeData((String) m.next());
@@ -264,7 +278,7 @@ public class Market {
      */
     public boolean exists(String tickerSymbol) {
 
-        if (market.search(tickerSymbol, 0) != -1) {
+        if (getMarket().search(tickerSymbol, 0) != -1) {
             return true;
         }
 
@@ -281,8 +295,8 @@ public class Market {
      * @return
      */
     public Iterator iterator() {
-        market.sort(0);
-        return market.IterateColumn(0);
+        getMarket().sort(0);
+        return getMarket().IterateColumn(0);
     }
 
     /**
@@ -291,6 +305,25 @@ public class Market {
      */
     @Override
     public String toString() {
-        return market.toString();
+        return getMarket().toString();
     }
+
+    /**
+     * @return the market
+     */
+    public StructuredTable<?> getMarket() {
+        return market;
+    }
+
+    /**
+     * @param market the market to set
+     */
+    public void setMarket(StructuredTable<?> market) {
+        this.setMarket(market);
+    }
+
+    /**
+     * @param market the market to set
+     */
+    
 }

@@ -55,7 +55,7 @@ public class StockUI {
                     case 'e':
                         break;
                 }
-            } else {
+            } /*else {
                 Table<String> options = new Table<String>();
                 options.addRow(Arrays.asList("1", "Login"));
                 options.addRow(Arrays.asList("2", "Create a User"));
@@ -71,12 +71,12 @@ public class StockUI {
                     case 'e':
                         i_sit = false;
                         break;
-                }
-            }
+                }*/
+            //}
         }
     }
 
-    private void createUser() {
+    public void createUser() {
         System.out.println("\n");
 
         String username;
@@ -101,16 +101,13 @@ public class StockUI {
 
     }
 
-    private void login() {
+    public void login(String user, String pass) {
 
         System.out.println("\n");
 
-        String username;
-        String password;
+        String username = user;
+        String password = pass;
         TraderAccount u = null;
-
-        username = Prompt.stringPrompt("What is your Username?", new UsernameInputValidator());
-        password = Prompt.stringPrompt("What is your Password?", new PasswordInputValidator());
 
         try {
             u = a.login(username, MD5.getMD5(password));
